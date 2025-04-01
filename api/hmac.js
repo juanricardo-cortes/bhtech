@@ -1,8 +1,8 @@
 export default function handler(req, res) {
     const crypto = require("crypto");
   
-    const apiPublicKey = '...';
-    const apiPrivateKey = '...';
+    const apiPublicKey = '504b389aa62025157eda08fd04a30651';
+    const apiPrivateKey = '019dff9f775e24a000c6c263db176e7c';
     const date = new Date();
     const apiDate = date.toUTCString().replace('GMT', 'UTC');
   
