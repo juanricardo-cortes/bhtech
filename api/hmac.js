@@ -1,8 +1,17 @@
 export default function handler(req, res) {
     const crypto = require("crypto");
-  
-    const apiPublicKey = '019dff9f775e24a000c6c263db176e7c';
-    const apiPrivateKey = '504b389aa62025157eda08fd04a30651';
+
+    // Check if the request method is POST
+    if (req.method !== 'POST') {
+        return res.status(405).json({ error: 'Method Not Allowed' });
+    }
+
+    // Check if the request body contains the required keys
+    if (!req.body || !req.body.apiPublicKey || !req.body.apiPrivateKey) {
+        return res.status(400).json({ error: 'Public and private keys are required' });
+    }
+
+    const { apiPublicKey, apiPrivateKey } = req.body;
 
     // Generate current UTC Date in required format
     const date = new Date();
@@ -13,7 +22,6 @@ export default function handler(req, res) {
     hmac.update(apiDate);
     const apiSignature = hmac.digest('hex');
 
-  
+    // Send the generated signature and other data back in the response
     res.status(200).json({ apiDate, apiSignature, apiPublicKey });
-  }
-  
+}
